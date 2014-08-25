@@ -55,9 +55,15 @@ class Validator {
     {
         list($rule, $parameters) = $this->parseRule($rule);
         $method = 'validate' . ucwords($rule);
-        $this->{$method}($this->input[$attribute], $attribute, $parameters);
+        $this->{$method}($this->getInput($attribute), $attribute, $parameters);
     }
+    private function getInput($attribute)
+    {
+        $input = $this->input[$attribute];
+        $input = trim($input);
+        return $input;
 
+    }
 
     public function validateRequired($validable, $attribute)
     {
@@ -103,6 +109,15 @@ class Validator {
             return true;
         }
         $this->errors[] = $attribute." non è un'email valida";
+        return false;
+    }
+    public function validateNumeric($validable, $attribute)
+    {
+        if(is_numeric($validable))
+        {
+            return true;
+        }
+        $this->errors[] = $attribute." non è numerico";
         return false;
     }
 
