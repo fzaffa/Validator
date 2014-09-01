@@ -1,3 +1,5 @@
+[![Build
+Status](https://travis-ci.org/fzaffa/Validator.svg?branch=master)](https://travis-ci.org/fzaffa/Validator)
 #Validator
 This is an extremely lightweight validator class. It has no dependencies and is extremely simple to use.
 ```php
