@@ -31,7 +31,7 @@ class Validator {
                 }
 
                 $class = 'Fzaffa\\Validator\\Rules\\'.ucfirst($class).'Rule';
-                $class = new $class($param);
+                $class = (isset($param)) ? new $class($attribute, $param) : new $class($attribute);
                 unset($param);
             }
         }

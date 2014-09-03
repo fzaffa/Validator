@@ -2,18 +2,14 @@
 
 namespace Fzaffa\Validator\Rules;
 
+class NumericRule extends AbstractRule{
 
-use Fzaffa\Validator\ValidatorRule;
-
-class NumericRule implements ValidatorRule{
-    public $error;
-
-    public function check($data, $attribute)
+    public function check($data)
     {
         if(is_numeric($data))
         {
             return true;
         }
-        $this->error = $attribute." non è numerico";
+        $this->error = $this->attribute." non è numerico";
     }
 } 

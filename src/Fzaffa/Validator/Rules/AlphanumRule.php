@@ -2,18 +2,14 @@
 
 namespace Fzaffa\Validator\Rules;
 
-use Fzaffa\Validator\ValidatorRule;
+class AlphanumRule extends AbstractRule{
 
-class AlphanumRule implements ValidatorRule{
-
-    public $error;
-
-    public function check($data, $attribute)
+    public function check($data)
     {
         if(ctype_alnum($data))
         {
             return true;
         }
-        $this->error = $attribute." deve essere alfanumerico";
+        $this->error = $this->attribute." deve essere alfanumerico";
     }
 }

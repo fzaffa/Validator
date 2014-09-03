@@ -2,18 +2,14 @@
 
 namespace Fzaffa\Validator\Rules;
 
-use Fzaffa\Validator\ValidatorRule;
+class RequiredRule extends AbstractRule {
 
-class RequiredRule implements ValidatorRule {
-
-    public $error;
-
-    public function check($data, $attribute)
+    public function check($data)
     {
         if(isset($data) && $data != '')
         {
             return true;
         }
-        $this->error = $attribute." è richiesto";
+        $this->error = $this->attribute." è richiesto";
     }
 }

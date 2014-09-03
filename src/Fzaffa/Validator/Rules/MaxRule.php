@@ -2,24 +2,14 @@
 
 namespace Fzaffa\Validator\Rules;
 
-use Fzaffa\Validator\ValidatorRule;
+class MaxRule extends AbstractRule{
 
-class MaxRule implements ValidatorRule{
-    public $error;
-
-    private $parameter;
-
-    public function __construct($parameter)
-    {
-        $this->parameter = $parameter;
-    }
-
-    public function check($data, $attribute)
+    public function check($data)
     {
         if (strlen($data) <= (int)$this->parameter)
         {
             return true;
         }
-        $this->error = $attribute. "deve essere massimo ".$this->parameter. " caratteri.";
+        $this->error = $this->attribute. "deve essere massimo ".$this->parameter. " caratteri.";
     }
 }
