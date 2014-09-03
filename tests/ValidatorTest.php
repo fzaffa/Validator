@@ -6,8 +6,6 @@ use \Fzaffa\Validator\Validator;
 class ValidatorTest extends PHPUnit_Framework_TestCase {
 
 
-
-
     public function testValidateRequired()
     {
         $rules = [
@@ -47,6 +45,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $validator = new Validator($rules, ["username" => "Fzaffa"]);
         $this->assertFalse($validator->passes());
     }
+
     public function testValidateEmail()
     {
         $rules = [
@@ -65,6 +64,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $validator = new Validator($rules, ["email" => "test@emailcom"]);
         $this->assertFalse($validator->passes());
     }
+
     public function testValidateAlphanum()
     {
         $rules = [
@@ -84,6 +84,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($validator->passes());
 
     }
+
     public function testValidateNumeric()
     {
         $rules = [
