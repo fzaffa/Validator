@@ -27,22 +27,11 @@ class Validator {
     {
         foreach ($rules as $attribute => &$rule) {
 
-             $rule = explode('|', $rule);
+            $rule = $this->splitIntoListOfRules($rule);
 
             foreach ($rule as &$class) {
 
-                if(strpos($class, ':')) {
-                    list($class, $param) = explode(':', $class);
-                }
-
-                $class = 'Fzaffa\\Validator\\Rules\\'.ucfirst($class).'Rule';
-                if(class_exists($class))
-                {
-                    $class = (isset($param)) ? new $class($attribute, $param) : new $class($attribute);
-                } else {
-                    throw new \Exception("Rule '".$class."' not found.");
-                }
-                unset($param);
+                $class = $this->parseAndInstantiateClassOrFail($class, $attribute);
             }
         }
         return $rules;
@@ -74,6 +63,60 @@ class Validator {
         $input = trim($input);
         return $input;
 
+    }
+
+    /**
+     * @param $rule
+     * @return array
+     */
+    private function splitIntoListOfRules($rule)
+    {
+        return explode('|', $rule);
+    }
+
+    /**
+     * @param $param
+     * @param $classFullName
+     * @param $attribute
+     * @return mixed
+     */
+    private function InstantiateClassWithParams($classFullName, $attribute, $param = null)
+    {
+        return ($param) ? new $classFullName($attribute, $param) : new $classFullName($attribute);
+    }
+
+    /**
+     * @param $class
+     * @return array
+     */
+    private function splitClassNameFromParam($class)
+    {
+        if (strpos($class, ':')) {
+            return explode(':', $class);
+        } else {
+            return [$class, null];
+        }
+    }
+
+    /**
+     * @param $class
+     * @param $attribute
+     * @return mixed
+     * @throws \Exception
+     */
+    private function parseAndInstantiateClassOrFail($class, $attribute)
+    {
+        list($className, $param) = $this->splitClassNameFromParam($class);
+
+        $classFullName = 'Fzaffa\\Validator\\Rules\\' . ucfirst($className) . 'Rule';
+
+        if (class_exists($classFullName)) {
+            $class = $this->InstantiateClassWithParams($classFullName, $attribute, $param);
+        } else {
+            throw new \Exception("Rule '" . $class . "' not found.");
+        }
+        unset($param);
+        return $class;
     }
 
 
