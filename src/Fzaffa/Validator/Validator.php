@@ -7,7 +7,7 @@ class Validator {
     /**
      * @var array
      */
-    public $errors = array();
+    public $errors = [];
 
     /**
      * @var
@@ -30,8 +30,7 @@ class Validator {
         try
         {
             $this->rules = $this->explodeRules($rules);
-        }
-        catch(\Exception $e)
+        } catch (\Exception $e)
         {
             throw new RuleNotFoundException($e);
         }
@@ -44,15 +43,18 @@ class Validator {
      */
     private function explodeRules($rules)
     {
-        foreach ($rules as $attribute => &$rule) {
+        foreach ($rules as $attribute => &$rule)
+        {
 
             $rule = $this->splitIntoListOfRules($rule);
 
-            foreach ($rule as &$class) {
+            foreach ($rule as &$class)
+            {
 
                 $class = $this->parseAndInstantiateClassOrFail($class, $attribute);
             }
         }
+
         return $rules;
     }
 
@@ -62,7 +64,8 @@ class Validator {
      */
     public function addErrors($rule, $attribute)
     {
-        if( isset($rule->error)) {
+        if (isset($rule->error))
+        {
             $this->errors[$attribute][] = $rule->error;
         }
     }
@@ -72,13 +75,15 @@ class Validator {
      */
     public function passes()
     {
-        foreach ($this->rules as $attribute => $rules) {
-            foreach ($rules as $rule) {
+        foreach ($this->rules as $attribute => $rules)
+        {
+            foreach ($rules as $rule)
+            {
                 $rule->check($this->getInput($attribute), $attribute);
                 $this->addErrors($rule, $attribute);
             }
         }
-        if(empty($this->errors)) return true;
+        if (empty($this->errors)) return true;
 
         return false;
     }
@@ -91,6 +96,7 @@ class Validator {
     {
         $input = $this->input[$attribute];
         $input = trim($input);
+
         return $input;
 
     }
@@ -121,9 +127,12 @@ class Validator {
      */
     private function splitClassNameFromParam($class)
     {
-        if (strpos($class, ':')) {
+        if (strpos($class, ':'))
+        {
             return explode(':', $class);
-        } else {
+        }
+        else
+        {
             return [$class, null];
         }
     }
@@ -140,12 +149,16 @@ class Validator {
 
         $classFullName = 'Fzaffa\\Validator\\Rules\\' . ucfirst($className) . 'Rule';
 
-        if (class_exists($classFullName)) {
+        if (class_exists($classFullName))
+        {
             $class = $this->InstantiateClassWithParams($classFullName, $attribute, $param);
-        } else {
+        }
+        else
+        {
             throw new \Exception("Rule '" . $class . "' not found.");
         }
         unset($param);
+
         return $class;
     }
 }

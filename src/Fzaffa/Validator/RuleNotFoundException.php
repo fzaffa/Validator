@@ -1,8 +1,7 @@
 <?php
 
-
 namespace Fzaffa\Validator;
 
+class RuleNotFoundException extends \Exception {
 
-class RuleNotFoundException extends \Exception{
-} 
+}

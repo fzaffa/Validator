@@ -2,11 +2,11 @@
 
 use Fzaffa\Validator\Rules\MinRule;
 
-class MinRuleTest extends PHPUnit_Framework_TestCase{
+class MinRuleTest extends PHPUnit_Framework_TestCase {
 
-    protected  $rule;
+    protected $rule;
 
-    protected  function setUp()
+    protected function setUp()
     {
         $this->rule = new MinRule('input', 3);
     }

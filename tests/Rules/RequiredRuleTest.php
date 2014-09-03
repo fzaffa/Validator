@@ -2,11 +2,11 @@
 
 use Fzaffa\Validator\Rules\RequiredRule;
 
-class RequiredRuleTest extends PHPUnit_Framework_TestCase{
+class RequiredRuleTest extends PHPUnit_Framework_TestCase {
 
-    protected  $rule;
+    protected $rule;
 
-    protected  function setUp()
+    protected function setUp()
     {
         $this->rule = new RequiredRule('input');
     }

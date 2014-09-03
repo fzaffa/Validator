@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: francesco
- * Date: 03/09/14
- * Time: 17:22
- */
 
 namespace Fzaffa\Validator\Rules;
 
 use Fzaffa\Validator\ValidatorRule;
 
-abstract class AbstractRule implements ValidatorRule{
+abstract class AbstractRule implements ValidatorRule {
 
     protected $attribute;
 
