@@ -10,6 +10,6 @@ class MaxRule extends AbstractRule{
         {
             return true;
         }
-        $this->error = $this->attribute. "deve essere massimo ".$this->parameter. " caratteri.";
+        $this->error = $this->attribute. " deve essere massimo ".$this->parameter. " caratteri.";
     }
 }

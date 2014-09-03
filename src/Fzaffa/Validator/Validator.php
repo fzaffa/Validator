@@ -2,8 +2,6 @@
 
 namespace Fzaffa\Validator;
 
-use Fzaffa\Validator\Rules\RequiredRule;
-
 class Validator {
 
     public $errors = array();
@@ -15,7 +13,14 @@ class Validator {
     public function __construct($rules, $input)
     {
         $this->input = $input;
-        $this->rules = $this->explodeRules($rules);
+        try
+        {
+            $this->rules = $this->explodeRules($rules);
+        }
+        catch(\Exception $e)
+        {
+            throw new RuleNotFoundException($e);
+        }
     }
 
     private function explodeRules($rules)
@@ -31,7 +36,12 @@ class Validator {
                 }
 
                 $class = 'Fzaffa\\Validator\\Rules\\'.ucfirst($class).'Rule';
-                $class = (isset($param)) ? new $class($attribute, $param) : new $class($attribute);
+                if(class_exists($class))
+                {
+                    $class = (isset($param)) ? new $class($attribute, $param) : new $class($attribute);
+                } else {
+                    throw new \Exception("Rule '".$class."' not found.");
+                }
                 unset($param);
             }
         }
