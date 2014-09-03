@@ -4,12 +4,26 @@ namespace Fzaffa\Validator;
 
 class Validator {
 
+    /**
+     * @var array
+     */
     public $errors = array();
 
+    /**
+     * @var
+     */
     protected $input;
 
+    /**
+     * @var
+     */
     protected $rules;
 
+    /**
+     * @param $rules
+     * @param $input
+     * @throws RuleNotFoundException
+     */
     public function __construct($rules, $input)
     {
         $this->input = $input;
@@ -23,6 +37,11 @@ class Validator {
         }
     }
 
+    /**
+     * @param $rules
+     * @return array
+     * @throws \Exception
+     */
     private function explodeRules($rules)
     {
         foreach ($rules as $attribute => &$rule) {
@@ -37,6 +56,10 @@ class Validator {
         return $rules;
     }
 
+    /**
+     * @param $rule
+     * @param $attribute
+     */
     public function addErrors($rule, $attribute)
     {
         if( isset($rule->error)) {
@@ -44,6 +67,9 @@ class Validator {
         }
     }
 
+    /**
+     * @return bool
+     */
     public function passes()
     {
         foreach ($this->rules as $attribute => $rules) {
@@ -57,6 +83,10 @@ class Validator {
         return false;
     }
 
+    /**
+     * @param $attribute
+     * @return string
+     */
     private function getInput($attribute)
     {
         $input = $this->input[$attribute];
@@ -78,7 +108,7 @@ class Validator {
      * @param $param
      * @param $classFullName
      * @param $attribute
-     * @return mixed
+     * @return \Fzaffa\Validator\ValidatorRule
      */
     private function InstantiateClassWithParams($classFullName, $attribute, $param = null)
     {
@@ -101,7 +131,7 @@ class Validator {
     /**
      * @param $class
      * @param $attribute
-     * @return mixed
+     * @return \Fzaffa\Validator\ValidatorRule
      * @throws \Exception
      */
     private function parseAndInstantiateClassOrFail($class, $attribute)
@@ -118,6 +148,4 @@ class Validator {
         unset($param);
         return $class;
     }
-
-
-} 
+}
