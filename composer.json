@@ -3,8 +3,8 @@
         "phpunit/phpunit": "4.2.*"
     },
     "autoload": {
-        "psr-0": {
-            "Fzaffa\\Validator": "src/"
+        "psr-4": {
+            "Fzaffa\\Validator\\": "src/"
         }
     }
 }
