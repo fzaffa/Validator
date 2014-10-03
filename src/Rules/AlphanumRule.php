@@ -10,6 +10,6 @@ class AlphanumRule extends AbstractRule {
         {
             return true;
         }
-        $this->error = $this->attribute . " deve essere alfanumerico";
+        return false;
     }
 }

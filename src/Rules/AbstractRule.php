@@ -10,13 +10,25 @@ abstract class AbstractRule implements ValidatorRule {
 
     protected $parameter;
 
-    public $error;
+    protected $error;
 
     public function __construct($attribute, $parameter = null)
     {
         $this->attribute = $attribute;
         $this->parameter = $parameter;
+        $this->error = $this->getRuleName();
     }
 
     abstract function check($data);
+
+    public function __get($method)
+    {
+        return $this->{$method};
+    }
+
+    private function getRuleName()
+    {
+        $arr = explode('\\', get_class($this));
+        return strtolower(substr(end($arr), 0, -4));
+    }
 } 

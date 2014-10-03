@@ -10,6 +10,6 @@ class EmailRule extends AbstractRule {
         {
             return true;
         }
-        $this->error = $this->attribute . " non è un'email valida";
+        return false;
     }
 } 

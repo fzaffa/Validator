@@ -18,6 +18,6 @@ class RequiredRuleTest extends PHPUnit_Framework_TestCase {
 
     public function testRequiredFailsWithEmptyInput()
     {
-        $this->assertNull($this->rule->check(""));
+        $this->assertFalse($this->rule->check(""));
     }
 }

@@ -10,6 +10,6 @@ class RequiredRule extends AbstractRule {
         {
             return true;
         }
-        $this->error = $this->attribute . " è richiesto";
+        return false;
     }
 }

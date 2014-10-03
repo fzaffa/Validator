@@ -19,6 +19,8 @@ class Validator {
      */
     protected $rules;
 
+    protected $errorMessages;
+
     /**
      * @param $rules
      * @param $input
@@ -62,12 +64,9 @@ class Validator {
      * @param $rule
      * @param $attribute
      */
-    public function addErrors($rule, $attribute)
+    private function addErrors($rule, $attribute)
     {
-        if (isset($rule->error))
-        {
-            $this->errors[$attribute][] = $rule->error;
-        }
+        $this->errors[$attribute][] = $this->parseMessage($rule);
     }
 
     /**
@@ -79,13 +78,13 @@ class Validator {
         {
             foreach ($rules as $rule)
             {
-                $rule->check($this->getInput($attribute), $attribute);
-                $this->addErrors($rule, $attribute);
+                if( ! $rule->check($this->getInput($attribute), $attribute))
+                {
+                    $this->addErrors($rule, $attribute);
+                }
             }
         }
-        if (empty($this->errors)) return true;
-
-        return false;
+        return count($this->errors) === 0;
     }
 
     /**
@@ -160,5 +159,30 @@ class Validator {
         unset($param);
 
         return $class;
+    }
+
+    private function loadMessages()
+    {
+        $this->errorMessages = include 'ErrorMessages.php';
+    }
+
+    private function parseMessage($rule)
+    {
+        $msg = $this->getErrorMessage($rule->error);
+        if($rule->parameter && strpos($msg, ':param'))
+        {
+            $msg = str_replace(':param', $rule->parameter, $msg);
+        }
+        return str_replace(':attribute', $rule->attribute, $msg);
+    }
+
+    private function getErrorMessage($name)
+    {
+        if( ! $this->errorMessages)
+        {
+            $this->loadMessages();
+        }
+
+        return $this->errorMessages[$name];
     }
 }

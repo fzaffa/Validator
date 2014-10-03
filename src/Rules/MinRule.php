@@ -10,6 +10,6 @@ class MinRule extends AbstractRule {
         {
             return true;
         }
-        $this->error = $this->attribute . " deve essere minimo " . $this->parameter . " caratteri.";
+        return false;
     }
 }

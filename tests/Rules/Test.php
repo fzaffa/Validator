@@ -19,7 +19,7 @@ class NumericRuleTest extends PHPUnit_Framework_TestCase {
 
     public function testNumericFailsWithWrongInput()
     {
-        $this->assertNull($this->rule->check("abcd"));
+        $this->assertFalse($this->rule->check("abcd"));
     }
 }
  

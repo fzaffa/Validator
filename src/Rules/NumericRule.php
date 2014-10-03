@@ -10,6 +10,6 @@ class NumericRule extends AbstractRule {
         {
             return true;
         }
-        $this->error = $this->attribute . " non è numerico";
+        return false;
     }
 } 

@@ -28,11 +28,11 @@ class AlphanumRuleTest extends PHPUnit_Framework_TestCase{
 
     public function testAlphanumFailsWithSymbols()
     {
-        $this->assertNull($this->rule->check("abc£123"));
+        $this->assertFalse($this->rule->check("abc£123"));
     }
 
     public function testAlphanumFailsWithWhiteSpace()
     {
-        $this->assertNull($this->rule->check("abc 123"));
+        $this->assertFalse($this->rule->check("abc 123"));
     }
 }

@@ -18,6 +18,6 @@ class MinRuleTest extends PHPUnit_Framework_TestCase {
 
     public function testAlphanumFailsWithWrongInput()
     {
-        $this->assertNull($this->rule->check("ab"));
+        $this->assertFalse($this->rule->check("ab"));
     }
 }

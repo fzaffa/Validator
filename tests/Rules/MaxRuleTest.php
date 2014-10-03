@@ -19,7 +19,7 @@ class MaxRuleTest extends PHPUnit_Framework_TestCase {
 
     public function testMaxFailsWithWrongInput()
     {
-        $this->assertNull($this->rule->check("abcders"));
+        $this->assertFalse($this->rule->check("abcders"));
     }
 }
  

@@ -18,12 +18,12 @@ class EmailRuleTest extends PHPUnit_Framework_TestCase {
 
     public function testEmailFailsWithoutAtSymbol()
     {
-        $this->assertNull($this->rule->check("correctemail.com"));
+        $this->assertFalse($this->rule->check("correctemail.com"));
     }
 
     public function testEmailFailsWithoutDomainSuffix()
     {
-        $this->assertNull($this->rule->check("correct@emailcom"));
+        $this->assertFalse($this->rule->check("correct@emailcom"));
     }
 }
  
