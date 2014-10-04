@@ -69,9 +69,7 @@ This will work and will validate each *name* and *value* fields against the rule
 - Numeric - *The :attribute field must be numeric.*
 - Required - *The :attribute field is required.*
 
-
- New rules will be added.
+New rules will be added.
  
- ##Contributing
- Feel free to contribute.
- 
+##Contributing
+Feel free to contribute.
