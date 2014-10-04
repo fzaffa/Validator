@@ -41,7 +41,7 @@ $rules = [
 	'title' => 'required',
 	'sections' => [
 			'name' => 'reqired|alphanum',
-			'value' => 'required
+			'value' => 'required'
 	]
 ]
 
