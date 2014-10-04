@@ -47,13 +47,26 @@ class Validator {
     {
         foreach ($rules as $attribute => &$rule)
         {
-
-            $rule = $this->splitIntoListOfRules($rule);
-
-            foreach ($rule as &$class)
+            /*
+             * If $rule is not an array then split the single rules
+             * */
+            if ( ! is_array($rule))
             {
 
-                $class = $this->parseAndInstantiateClassOrFail($class, $attribute);
+                $rule = $this->splitIntoListOfRules($rule);
+
+                foreach ($rule as &$class)
+                {
+
+                    $class = $this->parseAndInstantiateClassOrFail($class, $attribute);
+                }
+            }
+            /*
+             * Handle nested rules
+             * */
+            elseif (is_array($this->input[$attribute]))
+            {
+                $rule = $this->explodeRules($rule);
             }
         }
 
@@ -76,15 +89,47 @@ class Validator {
     {
         foreach ($this->rules as $attribute => $rules)
         {
-            foreach ($rules as $rule)
+            foreach ($rules as $name => $rule)
             {
-                if( ! $rule->check($this->getInput($attribute), $attribute))
+                if ( ! is_array($rule))
                 {
-                    $this->addErrors($rule, $attribute);
+                    if ( ! $rule->check($this->getInput($attribute), $attribute))
+                    {
+                        $this->addErrors($rule, $attribute);
+                    }
+                }
+
+                /*
+                 * Handle nested rules
+                 * */
+                else
+                {
+                    //get the input array
+                    $inputs = $this->getInput($attribute);
+                    //Loop through the input blocks
+                    foreach ($inputs as $input)
+                    {
+                        //loop through rules saved as arrays
+                        foreach ($this->rules[$attribute][$name] as $rule)
+                        {
+                            if ( ! $rule->check($input[$name], $name))
+                            {
+                                $this->addErrors($rule, $name);
+                            }
+                        }
+
+                    }
+
                 }
             }
         }
+
         return count($this->errors) === 0;
+    }
+
+    public function iterate($attribute, $rules)
+    {
+
     }
 
     /**
@@ -94,7 +139,7 @@ class Validator {
     private function getInput($attribute)
     {
         $input = $this->input[$attribute];
-        $input = trim($input);
+        $input = is_string($input) ? trim($input) : $input;
 
         return $input;
 
@@ -169,16 +214,17 @@ class Validator {
     private function parseMessage($rule)
     {
         $msg = $this->getErrorMessage($rule->error);
-        if($rule->parameter && strpos($msg, ':param'))
+        if ($rule->parameter && strpos($msg, ':param'))
         {
             $msg = str_replace(':param', $rule->parameter, $msg);
         }
+
         return str_replace(':attribute', $rule->attribute, $msg);
     }
 
     private function getErrorMessage($name)
     {
-        if( ! $this->errorMessages)
+        if ( ! $this->errorMessages)
         {
             $this->loadMessages();
         }
