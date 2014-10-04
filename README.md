@@ -12,13 +12,13 @@ Right now the package isn't in packagist repositories, to install download it an
 }
 ```
 ##Usage
-
 ```php
 
 $rules = [
 	'username' => 'required|alphanum|min:5',
 	'password' => 'required|min:8'
 ]
+//just for showing, you don't really want to hardcode the input :P
 $input = [
 	'username' => 'yourusername123',
 	'password' => 'correct horse battery staple'
