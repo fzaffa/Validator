@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Fzaffa\\Validator": "src"
+            "Fzaffa\\Validator\\": "src"
         }
     }
 }
