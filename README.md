@@ -7,7 +7,7 @@ Right now the package isn't in packagist repositories, to install download it an
 ```json
 "autoload": {
         "psr-4": {
-            "Fzaffa\\Validator": "path/to/src"
+            "Fzaffa\\Validator\\": "path/to/src"
         }
 }
 ```
