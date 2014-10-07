@@ -4,6 +4,7 @@
     "keywords": ["validator"],
     "homepage": "https://github.com/fzaffa/Validator",
     "license": "MIT",
+    "version": "0.2-dev",
     "authors": [
     {
         "name": "Francesco Zaffaroni",
